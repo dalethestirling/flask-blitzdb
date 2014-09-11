@@ -55,3 +55,34 @@ flask app:
 			abort(500)
 
 		return json.dumps(dict(get_query))
+
+Configuring flask-blitzdb
+-------------------------
+
+flask-blitzdb can be configured in several ways. this allows flask-blitzdb to be able to perform in a wider range of application senarios. 
+
+Currently flask-blitzdb only supports `blitzdb.FileBackend` datastores, the path of this is defined through the config variable BLITZDB_DATABASE.
+
+	app.config[’BLITZDB_DATABASE’] = '/path/to/db'
+
+By default flask-blitzdb will instansiate the transactions on your behalf using the `app.before_request` to create a transaction for your blitzdb datastore and `app.teardown_appcontext` to commit to the database. 
+
+This behaviour can be toggled using the folloing flask config variables:
+
+* `BLITZDB_BEGIN` is the flag to tell flask-blitzdb to handle commits for you 
+	enable:
+
+		app.config[’BLITZDB_BEGIN’] = True
+
+	disable:
+
+		app.config[’BLITZDB_BEGIN’] = False
+
+* `BLITZDB_COMMIT` is the flag for commit management
+	enable:
+
+		app.config[`BLITZDB_COMMIT`] = True
+
+	disable:
+
+		app.config[`BLITZDB_COMMIT`] = False

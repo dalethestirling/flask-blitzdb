@@ -20,7 +20,11 @@ class BlitzDB(object):
 
     def init_app(self, app):
         app.config.setdefault('BLITZDB_DATABASE', './flask-blitzdb.db')
-        app.config.setdefault('BLITZDB_TEARDOWN', True)
+        app.config.setdefault('BLITZDB_BEGIN', True)
+        app.config.setdefault('BLITZDB_COMMIT', True)
+        # Register our transaction handler to be run at the start of a request
+        app.before_request(self.before_request)
+
         # Use the newstyle teardown_appcontext if it's available,
         # otherwise fall back to the request context
         if hasattr(app, 'teardown_appcontext'):
@@ -32,8 +36,16 @@ class BlitzDB(object):
         print current_app.config['BLITZDB_DATABASE']
         return blitzdb.FileBackend(current_app.config['BLITZDB_DATABASE'])
 
+    def before_request(self, ):
+        if current_app.config['BLITZDB_BEGIN']:
+            ctx = stack.top
+            if hasattr(ctx, 'blitzdb'):
+                # Only create a new transaction if one does not exist 
+                if not ctx.blitzdb.in_transaction:
+                    ctx.blitzdb.begin()
+
     def teardown(self, exception):
-        if current_app.config['BLITZDB_TEARDOWN']:
+        if current_app.config['BLITZDB_COMMIT']:
             ctx = stack.top
             if hasattr(ctx, 'blitzdb'):
                 ctx.blitzdb.commit()
