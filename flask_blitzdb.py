@@ -37,18 +37,20 @@ class BlitzDB(object):
         return blitzdb.FileBackend(current_app.config['BLITZDB_DATABASE'])
 
     def before_request(self, ):
+        print 'in before'
         if current_app.config['BLITZDB_BEGIN']:
             ctx = stack.top
             if hasattr(ctx, 'blitzdb'):
-                # Only create a new transaction if one does not exist 
-                if not ctx.blitzdb.in_transaction:
-                    ctx.blitzdb.begin()
+                ctx.blitzdb.begin()
+        print 'done before'
 
     def teardown(self, exception):
         if current_app.config['BLITZDB_COMMIT']:
             ctx = stack.top
             if hasattr(ctx, 'blitzdb'):
+                print 'commiting'
                 ctx.blitzdb.commit()
+                print 'comitted'
 
     @property
     def connection(self):

@@ -36,7 +36,8 @@ from blitzdb import Document
 flask app: 
 
 	@app.route('/dbsave/<name>/<one>/<two>/<three>')
-	def index():
+	def dbsave(name, one, two, three):
+		conn = db.connection
 		test_dict = {
 			'name': name,
 			'one': one,
@@ -44,13 +45,14 @@ flask app:
 			'three': three
 		}
 		test_doc = test_model.TestDoc(test_dict)
-		db.save(test_doc)
+		conn.save(test_doc)
 		if not len(db.filter(test_model.TestDoc, {})) => 1:
 			abort(500)
 
 	@app.route('/get/<name>')
-	def index():
-		get_query = db.get(test_model.TestDoc, {'name': name})
+	def get_one(name):
+		conn = db.connection
+		get_query = conn.get(test_model.TestDoc, {'name': name})
 		if not len(get_query) == 1:
 			abort(500)
 
