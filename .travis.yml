@@ -9,7 +9,9 @@ install:
   - "pip install -r requirements.txt"
   - "pip install -r testing-requirements.txt"
 
-before_script: "python test/flask-test-app.py"
+before_script:
+  - "cd test" 
+  - "python test/flask-test-app.py"
 
 #command to run tests
 script: "nosetests"
