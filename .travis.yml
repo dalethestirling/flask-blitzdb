@@ -10,7 +10,7 @@ install:
   - "pip install -r testing-requirements.txt"
 
 before_script:
-  - "cd tests" 
+  - "cd test" 
   - "python flask-test-app.py"
 
 #command to run tests
