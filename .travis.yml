@@ -11,7 +11,7 @@ install:
 
 before_script:
   - "cd test" 
-  - "python flask-test-app.py"
+  - "python flask-test-app.py &"
 
 #command to run tests
 script: "nosetests"
