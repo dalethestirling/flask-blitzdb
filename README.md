@@ -2,8 +2,7 @@ flask-blitzdb
 =============
 
 [![Build Status](https://travis-ci.org/puredistortion/flask-blitzdb.png?branch=master)](https://travis-ci.org/puredistortion/flask-blitzdb)
-[![PyPi version](https://pypip.in/v/flask-blitzdb/badge.png)](https://crate.io/packages/flask-blitzdb/)
-[![PyPi downloads](https://pypip.in/d/flask-blitzdb/badge.png)](https://crate.io/packages/flask-blitzdb/)
+[![PyPi version](https://img.shields.io/pypi/v/flask-blitzdb.svg)](https://crate.io/packages/flask-blitzdb/)
 
 An extension to allow the integrated use of the [blitzdb](https://github.com/adewes/blitzdb) platform by [Andreas Dewes](http://www.andreas-dewes.de/en/)
 
